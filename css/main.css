@@ -1,0 +1,48 @@
+
+.table td, th {
+   text-align: center!important;   
+}
+
+body {
+  margin-top: 60px!important;
+}
+
+.border-left {
+    border-left: 1px solid #e3e3e3;
+    padding-left: 20px;
+}
+
+.border-right {
+    border-right: 1px solid #e3e3e3;
+    padding-right: 20px;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.border-top {
+    border-top: 1px solid #e3e3e3;
+}
+
+.modal {
+    /* new custom width */
+    width: 1200px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: -600px;
+}
+
+
+td.align-right {
+    text-align: right!important;
+}
+
+td.align-left {
+    text-align: left!important;
+}
+
+th, td {
+    background-color: white;
+}

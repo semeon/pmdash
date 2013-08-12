@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Redmine: Custom Queries</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <LINK REL="SHORTCUT ICON" HREF="img/fav/board-icone-7799.ico">
+
+    
+    <!-- Libs -->
+
+    <script type="text/javascript" 
+            language="javascript" 
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+    <link  href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="jslib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="jslib/bootstrap/js/bootstrap.min.js"></script>   
+    <!-- <script src="jslib/date.js"></script>  -->
+    <script src="jslib/moment.min.js"></script>   
+
+    <script src="jslib/datatables/js/jquery.dataTables.min.js"></script>   
+    <link  href="jslib/datatables/css/jquery.dataTables.css" rel="stylesheet" media="screen">
+
+	<link  href="jslib/pnotify/jquery.pnotify.default.css" media="all" rel="stylesheet" type="text/css" />
+	<link  href="jslib/pnotify/jquery.pnotify.default.icons.css" media="all" rel="stylesheet" type="text/css" />
+	<script src="jslib/pnotify/jquery.pnotify.js" type="text/javascript" ></script>
+
+
+
+
+    <!-- custom -->
+    <LINK REL="StyleSheet" HREF="css/main.css" TYPE="text/css">
+
+    <script type="text/javascript" language="javascript" src="settings.js"></script>
+
+    <script type="text/javascript" language="javascript" src="jscode/page/pageAlert.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/page/pageProgressBar.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/page/pageView.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/page/projectSummaryView.js"></script>
+
+    <script type="text/javascript" language="javascript" src="jscode/data/dataController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/data/dataModel.js"></script>
+
+    <script type="text/javascript" language="javascript" src="jscode/stat/dbController.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/stat/snapshotModel.js"></script>
+
+    <script type="text/javascript" language="javascript" src="jscode/app/appMonitor.js"></script>
+    <script type="text/javascript" language="javascript" src="jscode/app/appController.js"></script>
+
+    <script type="text/javascript" language="javascript" src="jscode/main.js"></script>
+
+  </head>
+  
+  <body onload="app.eventHandler.onBodyLoad();">
+
+    <div class="navbar navbar-fixed-top navbar-inverse">  
+      <div class="navbar-inner">  
+        <div class="container-fluid">  
+       	  <a class="brand" href="#"><img src="img/board-icone-7799-16-custom.png"/> Redmine Dashboard</a>
+          <div class="nav-collapse collapse">
+			<ul class="nav ">
+				<li classz="active">
+					<a href="https://redmine.firstlinesoftware.com/" target="_blank">Redmine</a>       	  
+				</li>
+        <li classz="active">
+          <a href="#" onclick="app.dbController.testDbReq();">DB Debug</a>          
+        </li>
+        <li classz="active">
+          <a href="http://docs.couchdb.org/en/latest/" target="_blank">Couch DB Docs</a>
+        </li>
+        <li classz="active">
+          <a href="http://wiki.apache.org/couchdb/HTTP_Document_API" target="_blank">Couch DB Wiki</a>
+        </li>
+
+
+			</ul>
+			<ul class="nav pull-right">
+				<li class="pull-right">
+					<!-- Button to trigger modal -->
+					<a href="#myModal" role="button" data-toggle="modal">Help <i class="icon-question-sign icon-white"></i></a>  
+				</li>
+			</ul>
+         </div>
+        </div>  
+      </div>  
+    </div>   
+
+    <div class="container-fluid">
+
+      <div class="row-fluid">
+        <div class="span8">
+			<div class="hero-unit" id="greatingsMessage">
+				<h1>Greetings!</h1>
+				<br/>
+				<p>Click the button below to collect statistics for your projects:</p>
+				<ul id="userProjectList"></ul>
+				<br/>
+				<p>
+					<a 	href="#" 
+						class="btn btn-primary btn-large hide" 
+						onclick="app.eventHandler.startButtonClick();"
+						id="startLoadingBtn">Start »</a>
+				</p>
+			</div>
+
+			<div class="hero-unit hide" id="pleaseWaitMessage">
+				<h2>Please, wait!</h2>
+				<p>Please wait for your project statistics to be loaded from Redmine.</p>
+				<div id="batchLoadStatus"></div>
+			</div>
+	          <div id="summaryDiv" class="border-right">
+
+
+	          </div>
+        </div>
+
+
+
+        <div class="span4" id="rightPane">
+          <div id="statusMessages" classs="border-left"></div>
+        </div>
+      </div>
+    </div>
+
+    
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Help!</h3>
+  </div>
+  <div class="modal-body">
+    <p>Привет! Если ты читаешь этот текст, то тебе, скорее всего, <a href="http://lurkmore.to/%D0%AF_%D0%BD%D0%B8%D1%85%D1%83%D1%8F_%D0%BD%D0%B5_%D0%BF%D0%BE%D0%BD%D1%8F%D0%BB">не все понятно</a> в этом приложении. Объясняю!</p>
+
+    <h4>Зачем?</h4>
+    <p>Это приложение создано для отображения краткой выжимки из твоего баг-трекера, скорее всего - Redmine. 
+    	Оно позволяет собрать в таблички статистику распределения багов/фич/задач и тп твоего проекта по группам, которые ты можешь настроить сам.</p>
+
+    <p>Например, можно создать следующие группы:</p>
+	<ul>
+		<li>New</li>
+		<li>In Porgress</li>
+		<li>Blocked</li>
+		<li>Done</li>
+	</ul>
+
+    <p>Затем в каждую из этих групп нужно включить статусы задач, которые есть в твоем трекере. Например, группа Done может включать в себя статусы Resolved, Closed, Accepted и тд. 
+    В таком случае, приложение будет считать все эти задачи находящимися в статусе Done и включать их в соответствующую статистику.</p>
+
+    <h4>Как установить?</h4>
+    <p>К сожалению, тебе понадобится сервер. 
+    	На момент написания этих строк, наш Redmine не поддерживал кросс-доменные AJAX-запросы, и его пришлось обмануть, создав прокси-сервер, который с одной стороны проксирует Redmine, с другой - позволяет захостить на нем это приложение. Возможно, проблема крос-доменных когда-то решится, и тебе лишь понадобится установить скромный сервер, поднять localhost, подложить файлы в его корень. Это позволит настроить приложение под твои нужды. 
+    	<br/>
+    	Возможно, ты не хочешь разбираться, как настроить такой сервер.. Но ведь у тебя под рукой есть пара-тройка программистов?
+    </p>
+
+    <h4>Как настроить?</h4>
+	<p>К сожалению, тебе придется редактировать JavaScript. Впрочем, я ведь уже упоминал о программистах?
+		Все что нужно исправить, сосредоточено в одном фале - <code>settings.js</code>.
+		Настройки делятся на две группы:
+	</p>
+	<ul>
+		<li>userSettings - пользовательские настройки </li>
+		<li>redmineSettings - настройки для работы с редмайн</li>
+	</ul>
+
+    <h5>Пользовательские настройки</h5>
+	<p>В пользовательских настройках необходимо создать настройки для проектов, статистику по которым ты хочешь видеть.
+		Постарайся создать их на основе примера.
+	</p>
+
+    <h5>Настройки Redmine</h5>
+	<p>В настройках редмайна необходимо задать две вещи. 
+		<br/>
+		Первое, <code>redmineUrl</code> - это домен редмайна, от http:// до слэша на конце.
+		<br/>
+		Второе, <code>userKey</code> - это твой личный код, ключ доступа к API, необходимый для авторизации запросов. Его можно найти на странице My Account (Моя учетная запись).
+		Если <code>userKey</code> не указан, то вам нужно сначала влогиниться в Redmine по указанному домену, и только потом открывать приложение.
+	</p>
+
+    <h4>Как оно работает?</h4>
+	<p>Страница формирует AJAX-запросы к серверу Redmine, собирает данные, структурирует их по группам, и считает количество задач. Прогресс запросов отображен на странице.
+	</p>
+
+    <h4>Что делать, если что-то сломалось?</h4>
+	<p>Позови, уже, программиста.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
+  </body>
+</html>
