@@ -5,7 +5,7 @@ function Settings() {
 	// console.log = function() {}
 
 	this.userSettings = {
-	    queryURL: 'http://speradze/issues',
+	    // queryURL: 'http://speradze/issues',
 	    userKey: '',
 	    projects: [
 
