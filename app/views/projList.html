@@ -1,0 +1,30 @@
+<div class="row-fluid" ng-controller="ProjectCtrl">
+    <div class="span12">
+    <ul class="nav nav-pills nav-stacked">
+      <li class="nav-header">Your projects</li>
+      <li ng-repeat="project in projects | orderBy:'title'"><a href="" ng-click="projectClick(project)">{{project.title}}</a>
+      <li><a href="">Dummy Project 1</a>
+      <li><a href="">Dummy Project 2</a>
+      <li><a href="">Dummy Project 3</a>
+      <li><a href="">Dummy Project 4</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!--
+<div class="row-fluid" ng-controller="ProjCtrl">
+  <div class="span12 wells well-small">
+    <div class="btn-group pull-right">
+      <a class="btn btn-mini btn" href="#"><i class="icon-plus zicon-white"></i> New Project</a>
+    </div>    
+    <ul class="nav nav-pills nav-stacked">
+      <li class="nav-header">Your projects</li>
+      <li ng-repeat="project in projects | orderBy:'title'" 
+          ng-class="{active:project.isSelected}"
+          ><a href="" ng-click="projectClick(project)">{{project.title}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+-->

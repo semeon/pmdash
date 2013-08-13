@@ -28,23 +28,29 @@
     <link  href="jslib/datatables/css/jquery.dataTables.css" rel="stylesheet" media="screen">
 
 
-
     <!-- custom -->
     <LINK REL="StyleSheet" HREF="css/main.css" TYPE="text/css">
 
-
+    <script type="text/javascript" language="javascript" src="settings.js"></script>
     <script type="text/javascript" language="javascript" src="app/app.js"></script>
     <script type="text/javascript" language="javascript" src="app/controllers/appCtrl.js"></script>
-    <script type="text/javascript" language="javascript" src="app/controllers/dataCtrl.js"></script>
+    <script type="text/javascript" language="javascript" src="app/services/dataLoadSrvs.js"></script>
+
+
+
     <script type="text/javascript" language="javascript" src="app/controllers/dataLoadCtrl.js"></script>
+    <script type="text/javascript" language="javascript" src="app/controllers/dataCtrl.js"></script>
     <script type="text/javascript" language="javascript" src="app/controllers/mainCtrl.js"></script>
 
-    <script type="text/javascript" language="javascript" src="settings.js"></script>
+    <script type="text/javascript" language="javascript" src="app/controllers/projectCtrl.js"></script>
+
 
 
   </head>
   
   <body ng-controller="AppCtrl">
+
+    <!-- Nav bar -->
     <div class="navbar navbar-fixed-top navbar-inverse">  
       <div class="navbar-inner">  
         <div class="container-fluid">  
@@ -82,7 +88,9 @@
       </div>  
     </div>  
 
-    <div ng-view></div>
+    <div class="container-fluid">
+      <div ng-view></div>
+    </div>
 
   </body>
 </html>
