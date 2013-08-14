@@ -4,7 +4,36 @@
     <div class="panel" ng-repeat="project in projects | orderBy:'title'">
       <div class="panel-heading header">{{project.title}}</div>
       <div class="panel-body">
-        <p>Project stats goes here...</p>
+        <div class="row" ng-repeat="version in project.versions | orderBy:'due_date'">
+          <div class="col-md-12">
+            <strong class="header">Version: {{version.name}} / Due to: {{convertDueDate(version.due_date)}}</strong>
+
+              <table class="table table-condensed table-bordered">
+                <thead>
+                  <tr>
+                    <th>Tracker</th>
+                    <th ng-repeat="status in project.customStatuses">{{status.title}}</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="tracker in project.issueTrackers">
+                    <td>{{getTrackerName(tracker)}}</td>
+                    <td ng-repeat="status in project.customStatuses"></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>All Trackers</th>
+                    <th ng-repeat="status in project.customStatuses"></th>
+                    <th></th>                    
+                  </tr>                  
+                </tbody>
+                
+              </table>            
+
+          </div>
+        </div>
+
       </div>
     </div>
 
