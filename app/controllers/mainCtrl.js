@@ -8,6 +8,6 @@ function MainCtrl($scope, $rootScope, $location) {
     }
 
 	$scope.projListTemplate = 'app/views/projList.html';
-
+	$scope.statsTemplate = 'app/views/stats.html';
 
 }

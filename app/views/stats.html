@@ -1,0 +1,16 @@
+<div class="row" ng-controller="StatsCtrl">
+  <div class="col-md-12">
+
+    <div class="panel" ng-repeat="project in projects | orderBy:'title'">
+      <div class="panel-heading header">{{project.title}}</div>
+      <div class="panel-body">
+        <p>Project stats goes here...</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
