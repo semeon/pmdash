@@ -15,4 +15,12 @@ function ProjectCtrl($scope, $rootScope, ProjectDataLoader) {
 
     }
 
+    $scope.projectHideClick = function(project) {
+      if (project.hidden == undefined) {
+        project.hidden = true;
+      } else {
+        project.hidden = !project.hidden;
+      }
+    }
+
 }

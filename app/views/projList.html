@@ -3,24 +3,41 @@
     <div class="panel">
       <div class="panel-heading header">PROJECTS</div>
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="project in projects | orderBy:'title'"><a href="" 
-        ng-click="projectClick(project)">{{project.title}}</a>
-        <button type="button" class="btn btn-default btn-xs pull-right hover"
-                ng-click="projectClick(project)"><i class="icon-refresh"></i></button>
+        <li class="list-group-item" 
+            ng-repeat="project in projects | orderBy:'title'">
+          <a href="" 
+            ng-class="{greyed:project.hidden}"
+             ng-click="projectHideClick(project)">
+             {{project.title}}
+          </a>
+
+  
         </li>
-
-
-
-        <li class="list-group-item" >Dummy Project 1</li>
-        <li class="list-group-item" >Dummy Project 2</li>
-        <li class="list-group-item" >Dummy Project 3</li>
-        <li class="list-group-item" >Dummy Project 4</li>
       </ul>
+
+
+<!--       <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="" 
+              ng-class="{active:!project.hidden}"
+              ng-repeat="project in projects | orderBy:'title'">
+            <a href="" 
+               ng-click="projectHideClick(project)">
+               {{project.title}}
+            </a>
+          </li>
+        </ul>
+      </div> -->
     </div>
   </div>
 </div>
 
 <!--
+        <button type="button" class="btn btn-info btn-xs pull-right hover"
+                ng-click="projectClick(project)"><i class="icon-refresh icon-white"></i></button>
+
+
+
 <div class="row-fluid" ng-controller="ProjCtrl">
   <div class="span12 wells well-small">
     <div class="btn-group pull-right">

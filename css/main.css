@@ -28,6 +28,10 @@ li:hover .hover {
     color: #ccc;
 }
 
+.greyed:hover {
+    color: #ccc;
+}
+
 td, th {
     color: #666;
 }

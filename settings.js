@@ -52,7 +52,7 @@ function Settings() {
 			// ,
 			// { 
 			// 	id: 'lotpzalog', 				
-			// 	title: 'Parking Server',
+			// 	title: 'RAD Mortgage',
 			// 	issueTrackers: [1, 2, 4, 5, 6, 10], 
 			// 	customStatuses: [
 			// 		{title: 'Not Started', 	includes: [1]},

@@ -22,15 +22,30 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
       return trackerName;
     }
 
+
+
+
     $scope.versionReloadClick = function(project, version) {
       console.log(log_ctrl + 'versionReloadClick: ' + project.id + ' ' + version.name);
       version.reset();
-
       ProjectDataLoader.loadVersionIssuesData(project, version);
     }
 
+    $scope.versionHideClick = function(version) {
+      if (version.hidden == undefined) {
+        version.hidden = true;
+      } else {
+        version.hidden = !version.hidden;
+      }
+    }
 
-
+    $scope.versionExpandClick = function(version) {
+      if (version.hidden == undefined) {
+        version.expanded = true;
+      } else {
+        version.expanded = !version.expanded;
+      }
+    }
 
 
 }

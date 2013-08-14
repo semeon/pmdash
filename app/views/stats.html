@@ -2,23 +2,34 @@
   <div class="col-md-12">
 
     <div class="panel" ng-repeat="project in projects | orderBy:'title'">
-      <div class="panel-heading header">PROJECT: {{project.title}}</div>
+      <div class="panel-heading">
+        <p class="header">PROJECT: {{project.title}}</p>
+      </div>
 
-      <ul class="list-group">
+      <ul class="list-group"  ng-hide="project.hidden">
         <li class="list-group-item" ng-repeat="version in project.versions | orderBy:'due_date'">
           <strong class="header">Version: {{version.name}} / Due to: {{convertDueDate(version.due_date)}} </strong>
 
             <div class="btn-group pull-right">
-              <button type="button" class="btn btn-info btn-xs" disabled="disabled">Hide</button>
-              <button type="button" class="btn btn-info btn-xs" disabled="disabled">Collapse</button>
               <button type="button" class="btn btn-info btn-xs"
-                      ng-click="versionReloadClick(project, version)"><i class="icon-refresh icon-white"></i></button>
+                      ng-click="versionHideClick(version)"
+                      data-toggle="button"
+                      >Hide</button>
+
+              <button type="button" class="btn btn-info btn-xs" 
+                      ng-click="versionExpandClick(version)"
+                      data-toggle="button"
+                      >See trackers</button>
+
+              <button type="button" class="btn btn-info btn-xs"
+                      ng-click="versionReloadClick(project, version)"
+                      ><i class="icon-refresh icon-white"></i></button>
             </div>
             <div class="pull-right" ng-show="version.loadInProgress" style="padding-top: 2px; margin-right: 10px;">
               <img src="img/ajax-loader.gif"/>
             </div>
 
-            <table class="table table-condensed table-bordered" style="margin-top: 10px;">
+            <table class="table table-condensed table-bordered" style="margin-top: 10px;" ng-hide="version.hidden">
               <thead>
                 <tr>
                   <th>Tracker</th>
@@ -27,7 +38,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="tracker in project.issueTrackers">
+                <tr ng-repeat="tracker in project.issueTrackers" ng-show="version.expanded">
                   <td>{{getTrackerName(tracker)}}</td>
                   <td class="align-center"
                       ng-class="{greyed:version.loadInProgress}" 
@@ -38,12 +49,12 @@
                 </tr>
                 <tr>
                   <th>All Trackers</th>
-                  <th class="align-center"
+                  <td class="align-center"
                       ng-class="{greyed:version.loadInProgress}"
-                      ng-repeat="status in project.customStatuses">{{version.getCustomStatusCount(status.title)}}</th>
-                  <th class="align-center"
+                      ng-repeat="status in project.customStatuses">{{version.getCustomStatusCount(status.title)}}</td>
+                  <td class="align-center"
                       ng-class="{greyed:version.loadInProgress}"
-                      >{{version.issues.length}}</th>                    
+                      >{{version.issues.length}}</td>
                 </tr>                  
               </tbody>
               
