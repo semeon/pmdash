@@ -7,18 +7,35 @@
 }
 
 .header {
-    color: #999;
+    color: #666;
     font-weight: bold;
 }
 
-
-/*
-.table td, th {
-   text-align: center!important;   
+.align-center {
+   text-align: center!important; 
 }
-*/
 
-body { padding-top: 70px; }
+.hover {
+    visibility: hidden;
+}
+
+
+li:hover .hover {
+    visibility: visible;
+}
+
+.greyed {
+    color: #ccc;
+}
+
+td, th {
+    color: #666;
+}
+
+
+body { 
+    padding-top: 70px; 
+}
 
 
 

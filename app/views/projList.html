@@ -3,7 +3,13 @@
     <div class="panel">
       <div class="panel-heading header">PROJECTS</div>
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="project in projects | orderBy:'title'"><a href="" ng-click="projectClick(project)">{{project.title}}</a></li>
+        <li class="list-group-item" ng-repeat="project in projects | orderBy:'title'"><a href="" 
+        ng-click="projectClick(project)">{{project.title}}</a>
+        <button type="button" class="btn btn-default btn-xs pull-right hover"
+                ng-click="projectClick(project)"><i class="icon-refresh"></i></button>
+        </li>
+
+
 
         <li class="list-group-item" >Dummy Project 1</li>
         <li class="list-group-item" >Dummy Project 2</li>

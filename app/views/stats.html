@@ -2,39 +2,56 @@
   <div class="col-md-12">
 
     <div class="panel" ng-repeat="project in projects | orderBy:'title'">
-      <div class="panel-heading header">{{project.title}}</div>
-      <div class="panel-body">
-        <div class="row" ng-repeat="version in project.versions | orderBy:'due_date'">
-          <div class="col-md-12">
-            <strong class="header">Version: {{version.name}} / Due to: {{convertDueDate(version.due_date)}}</strong>
+      <div class="panel-heading header">PROJECT: {{project.title}}</div>
 
-              <table class="table table-condensed table-bordered">
-                <thead>
-                  <tr>
-                    <th>Tracker</th>
-                    <th ng-repeat="status in project.customStatuses">{{status.title}}</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="tracker in project.issueTrackers">
-                    <td>{{getTrackerName(tracker)}}</td>
-                    <td ng-repeat="status in project.customStatuses"></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>All Trackers</th>
-                    <th ng-repeat="status in project.customStatuses"></th>
-                    <th></th>                    
-                  </tr>                  
-                </tbody>
-                
-              </table>            
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="version in project.versions | orderBy:'due_date'">
+          <strong class="header">Version: {{version.name}} / Due to: {{convertDueDate(version.due_date)}} </strong>
 
-          </div>
-        </div>
+            <div class="btn-group pull-right">
+              <button type="button" class="btn btn-info btn-xs" disabled="disabled">Hide</button>
+              <button type="button" class="btn btn-info btn-xs" disabled="disabled">Collapse</button>
+              <button type="button" class="btn btn-info btn-xs"
+                      ng-click="versionReloadClick(project, version)"><i class="icon-refresh icon-white"></i></button>
+            </div>
+            <div class="pull-right" ng-show="version.loadInProgress" style="padding-top: 2px; margin-right: 10px;">
+              <img src="img/ajax-loader.gif"/>
+            </div>
 
-      </div>
+            <table class="table table-condensed table-bordered" 
+                   style="margin-top: 10px;">
+              <thead>
+                <tr>
+                  <th>Tracker</th>
+                  <th class="align-center" ng-repeat="status in project.customStatuses">{{status.title}}</th>
+                  <th class="align-center">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="tracker in project.issueTrackers">
+                  <td>{{getTrackerName(tracker)}}</td>
+                  <td class="align-center"
+                      ng-class="{greyed:version.loadInProgress}" 
+                      ng-repeat="status in project.customStatuses">{{version.getCountByCustomStatusAndTracker(status.title, tracker)}}</td>
+                  <td class="align-center"
+                      ng-class="{greyed:version.loadInProgress}"
+                      >{{version.getTrackerCount(tracker)}}</td>
+                </tr>
+                <tr>
+                  <th>All Trackers</th>
+                  <th class="align-center"
+                      ng-class="{greyed:version.loadInProgress}"
+                      ng-repeat="status in project.customStatuses">{{version.getCustomStatusCount(status.title)}}</th>
+                  <th class="align-center"
+                      ng-class="{greyed:version.loadInProgress}"
+                      >{{version.issues.length}}</th>                    
+                </tr>                  
+              </tbody>
+              
+            </table>            
+        </li>
+      </ul>
+
     </div>
 
   </div>

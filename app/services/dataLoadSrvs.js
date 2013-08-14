@@ -57,7 +57,7 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
 
     requestVersions(project, requestUrl);  
 
-      // Request --------------------------------------------------------------
+    // Request --------------------------------------------------------------
       function requestVersions (project, requestUrl) {
         var requestParameters = { status: 'open'};
         genericRequest( requestUrl, 
@@ -89,6 +89,8 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
               var version = appData.createVersion(project, data.versions[v]);
               // eventHandler.versionCreated(project, version);
 
+
+
               console.log('Calling load issues by version for ' + project.id + ' / ' + version.name);
               dataLoader.loadVersionIssuesData(project, version);
             }
@@ -112,6 +114,7 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
   dataLoader.loadVersionIssuesData = function(project, version) {
     console.log('Starting batch load for ' + project.id + ' / ' + version.name);
 
+      version.loadInProgress = true;
       var requestUrl =  redmineSettings.redmineUrl + 
                         redmineSettings.projectDataUrl + 
                         project.id + '/' +
@@ -140,7 +143,7 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
 
     // Response processing --------------------------------------------------
     function processIssuesPage (data, rp, project, version, requestUrl) {
-      console.log('Processing issues page ' + rp.offset + ' for ' + project.id + ' / ' + version.name);
+      console.log(log_ctrl + 'Processing issues page ' + rp.offset + ' for ' + project.id + ' / ' + version.name);
 
       if (data.issues) {
 
@@ -159,6 +162,8 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
         var loadedIssuesCount = version.sourceIssues.length;
         // eventHandler.versionBatchLoadUpdated(project, version, loadedIssuesCount, data.total_count);
 
+        console.log(log_ctrl + 'Data total count: ' + version.sourceIssues.length);
+
         if (loadedIssuesCount < data.total_count) {
           var nexPageNum = loadedIssuesCount;
           console.log(' - Calling next page load, page ' + nexPageNum);
@@ -166,7 +171,10 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
 
         } else {
           // eventHandler.versionBatchLoadCompleted(project, version);
+          version.loadInProgress = false;
+          $rootScope.data.calculateStatistics(project, version);
         }
+
       } else if (data.error) { 
         console.log(data.error);
         // eventHandler.dataLoadErrorOccured(data.error);

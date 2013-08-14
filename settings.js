@@ -49,7 +49,19 @@ function Settings() {
 					{title: 'Done', 	includes: [5]}
 				]
 			}
-
+			// ,
+			// { 
+			// 	id: 'lotpzalog', 				
+			// 	title: 'Parking Server',
+			// 	issueTrackers: [1, 2, 4, 5, 6, 10], 
+			// 	customStatuses: [
+			// 		{title: 'Not Started', 	includes: [1]},
+			// 		{title: 'In Progress', 	includes: [2, 19]},
+			// 		{title: 'Blocked', 	includes: [4, 14]},
+			// 		{title: 'Testing', 	includes: [3, 6, 18]},
+			// 		{title: 'Done', 	includes: [5]}
+			// 	]
+			// }
 	    ],
 	    
     },

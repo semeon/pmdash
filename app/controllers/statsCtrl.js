@@ -9,6 +9,7 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
 
     $scope.projects = appData.projects;
 
+
     $scope.convertDueDate = function(dueDate) {
       var dueStr = dueDate;
       if (dueStr == undefined) dueStr = 'No Date';
@@ -17,9 +18,19 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
 
     $scope.getTrackerName = function(trackerId) {
       var trackerName = '';
-      console.log(log_ctrl + 'trackerId: ' + trackerId);
       trackerName = redmineSettings.issueTrackersMap[String(trackerId)].name;
       return trackerName;
     }
+
+    $scope.versionReloadClick = function(project, version) {
+      console.log(log_ctrl + 'versionReloadClick: ' + project.id + ' ' + version.name);
+      version.reset();
+
+      ProjectDataLoader.loadVersionIssuesData(project, version);
+    }
+
+
+
+
 
 }

@@ -6,76 +6,78 @@ function DataCtrl() {
 
 	// Calculate data statistics
 	// ---------------------------------------------------------------------------
-	  //   this.calculateStatistics = function (project, version) {
+	    this.calculateStatistics = function (project, version) {
 
-			// console.log('Gathering statistics for ' + project.id + ' / ' + version.name);
-			// var issues = version.sourceIssues;
+			console.log('Gathering statistics for ' + project.id + ' / ' + version.name);
+			var issues = version.sourceIssues;
 
-			// for (var i=0; i<issues.length; i++) {
-			// 	var issue = issues[i];
-			// 	console.log('------------------------------------------------------');
-			// 	console.log('Processing issue[' + i + '] #' + issue.id);
+			// version.reset();
 
-			// 	var issueStatus = issue.status.id;
-			// 	var issueTracker = issue.tracker.id;
+			for (var i=0; i<issues.length; i++) {
+				var issue = issues[i];
+				console.log('------------------------------------------------------');
+				console.log('Processing issue[' + i + '] #' + issue.id);
 
-			// 	// var tracker = version.issuesByTracker[issueTracker];
-			// 	// if (tracker == undefined) {}
+				var issueStatus = issue.status.id;
+				var issueTracker = issue.tracker.id;
 
-			// 	console.log('- Checking tracker and status..');
-			// 	if ( $.inArray(issueTracker, project.issueTrackers) > -1 
-			// 			&&
-			// 		 $.inArray(issueStatus, project.supportedStatuses) > -1 ) {
+				// var tracker = version.issuesByTracker[issueTracker];
+				// if (tracker == undefined) {}
 
-			// 		console.log('-- Good. Status: ' + issueStatus + ', tracker:  '+ issueTracker + '. Proceeding..');
+				console.log('- Checking tracker and status..');
+				if ( $.inArray(issueTracker, project.issueTrackers) > -1 
+						&&
+					 $.inArray(issueStatus, project.supportedStatuses) > -1 ) {
 
-			// 		// All valid issues
-			// 		// ---------------------------------------------------
-			// 			console.log('--- Pushing to all issues list and hash map');
-			// 			version.issues.push(issue);
-			// 			version.issuesMap[String(issue.id)] = issue;
+					console.log('-- Good. Status: ' + issueStatus + ', tracker:  '+ issueTracker + '. Proceeding..');
 
-
-			// 		// Collecting trackers
-			// 		// ---------------------------------------------------
-			// 			console.log('--- Pushing to issueTrackers with id: ' + issueTracker);
-			// 			version.issueTrackers[issueTracker].count++;
-			// 			version.issueTrackers[issueTracker].issues.push(issue);
+					// All valid issues
+					// ---------------------------------------------------
+						console.log('--- Pushing to all issues list and hash map');
+						version.issues.push(issue);
+						version.issuesMap[String(issue.id)] = issue;
 
 
-			// 		// Collecting statuses
-			// 		// ---------------------------------------------------
-			// 			console.log('--- Pushing to issueStatuses with id: ' + issueStatus);
-			// 			version.issueStatuses[issueStatus].count++;
-			// 			version.issueStatuses[issueStatus].issues.push(issue);
+					// Collecting trackers
+					// ---------------------------------------------------
+						console.log('--- Pushing to issueTrackers with id: ' + issueTracker);
+						version.issueTrackers[issueTracker].count++;
+						version.issueTrackers[issueTracker].issues.push(issue);
 
 
-			// 		// Collecting custom status groups
-			// 		// ---------------------------------------------------
-			// 			var issueGroupname = getIssueGroupName(issueStatus);
-			// 			console.log('--- Pushing to issueGroup: ' + issueGroupname);
-			// 			version.issueGroups[issueGroupname].count++;
-			// 			version.issueGroups[issueGroupname].issues.push(issue);
+					// Collecting statuses
+					// ---------------------------------------------------
+						console.log('--- Pushing to issueStatuses with id: ' + issueStatus);
+						version.issueStatuses[issueStatus].count++;
+						version.issueStatuses[issueStatus].issues.push(issue);
 
 
-			// 	} else {
-			// 		console.log('-- Doesn\'t fit. Next..');
-			// 	}
-			// }
+					// Collecting custom status groups
+					// ---------------------------------------------------
+						var issueGroupname = getIssueGroupName(issueStatus);
+						console.log('--- Pushing to issueGroup: ' + issueGroupname);
+						version.issueGroups[issueGroupname].count++;
+						version.issueGroups[issueGroupname].issues.push(issue);
 
-			// function getIssueGroupName (statusId) {
-			// 	console.log('---- getIssueGroupName requested for staus ID: ' + statusId);
-			// 	for (var cs=0; cs<project.customStatuses.length; cs++ ) {
-			// 		var groupName = project.customStatuses[cs].title;
-			// 		if ( $.inArray(statusId, project.customStatuses[cs].includes) > -1 ) {
-			// 			issueGroupname = groupName;
 
-			// 			console.log('----- Return: ' + issueGroupname);
-			// 			return issueGroupname;
-			// 		}
-			// 	}
-			// }
-	  //   }
+				} else {
+					console.log('-- Doesn\'t fit. Next..');
+				}
+			}
+
+			function getIssueGroupName (statusId) {
+				console.log('---- getIssueGroupName requested for staus ID: ' + statusId);
+				for (var cs=0; cs<project.customStatuses.length; cs++ ) {
+					var groupName = project.customStatuses[cs].title;
+					if ( $.inArray(statusId, project.customStatuses[cs].includes) > -1 ) {
+						issueGroupname = groupName;
+
+						console.log('----- Return: ' + issueGroupname);
+						return issueGroupname;
+					}
+				}
+			}
+	    }
 
 
 	// Create a new version
@@ -99,35 +101,35 @@ function DataCtrl() {
 			// ----------------------------------------------------------
 
 				version.getCustomStatusCount = function (statusName) {
-					console.log('getCustomStatusCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  statusName);
+					// console.log('getCustomStatusCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  statusName);
 					var result = this.issueGroups[statusName].count;
-					console.log('- Result: ' + result);
+					// console.log('- Result: ' + result);
 					return result;
 				}
 				version.getCustomStatusIssues = function (statusName) {
-					console.log('getCustomStatusIssues requested for ' + project.id + ' / ' + this.name  + ' / ' +  statusName);
+					// console.log('getCustomStatusIssues requested for ' + project.id + ' / ' + this.name  + ' / ' +  statusName);
 					var result = this.issueGroups[statusName].issues;
 					return result;
 				}
 
 
 				version.getTrackerCount = function (trackerId) {
-					console.log('getTrackerCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  trackerId);
+					// console.log('getTrackerCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  trackerId);
 					var result = this.issueTrackers[trackerId].count;
-					console.log('- Result: ' + result);
+					// console.log('- Result: ' + result);
 					return result;
 				}
 				version.getTrackerIssues = function (trackerId) {
-					console.log('getTrackerCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  trackerId);
+					// console.log('getTrackerCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  trackerId);
 					var result = this.issueTrackers[trackerId].issues;
 					return result;
 				}
 
 
 				version.getStatusCount = function (statusId) {
-					console.log('getStatusCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  statusId);
+					// console.log('getStatusCount requested for ' + project.id + ' / ' + this.name  + ' / ' +  statusId);
 					var result = this.issueStatuses[statusId].count;
-					console.log('- Result: ' + result);
+					// console.log('- Result: ' + result);
 					return result;
 				}
 				version.getStatusIssues = function (statusId) {
