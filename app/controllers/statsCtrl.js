@@ -8,7 +8,7 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
     var redmineSettings = $rootScope.settings.redmineSettings;
 
     $scope.projects = appData.projects;
-
+    $scope.issueGridTemplate = 'app/views/_issueGrid.html';
 
     $scope.convertDueDate = function(dueDate) {
       var dueStr = dueDate;
@@ -21,9 +21,6 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
       trackerName = redmineSettings.issueTrackersMap[String(trackerId)].name;
       return trackerName;
     }
-
-
-
 
     $scope.versionReloadClick = function(project, version) {
       console.log(log_ctrl + 'versionReloadClick: ' + project.id + ' ' + version.name);
@@ -46,6 +43,13 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
         version.expanded = !version.expanded;
       }
     }
+
+    $scope.getModalId = function (project, version, str) {
+      var id = 'modal_' +  project.id + '_' + version.id + '_' + str;
+      return id;
+    }
+
+
 
 
 }
