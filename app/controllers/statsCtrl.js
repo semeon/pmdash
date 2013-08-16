@@ -37,11 +37,12 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
     }
 
     $scope.versionExpandClick = function(version) {
-      if (version.hidden == undefined) {
+      if (version.expanded == undefined) {
         version.expanded = true;
       } else {
         version.expanded = !version.expanded;
       }
+      console.log(log_ctrl + 'version.hidden: ' + version.hidden);
     }
 
     $scope.getModalId = function (project, version, str) {
