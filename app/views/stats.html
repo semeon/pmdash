@@ -5,93 +5,102 @@
       <div class="panel-heading header">PROJECT: {{project.title}}</div>
 
       <ul class="list-group"  ng-hide="project.hidden">
-        <li class="list-group-item" ng-repeat="version in project.versions | orderBy:'due_date'">
-          <strong class="header">Version: {{version.name}} / Due to: {{convertDueDate(version.due_date)}} </strong>
+        <li class="list-group-item" 
+            style="min-height: 45px;"
+            ng-repeat="version in project.versions | orderBy:'due_date'">
+          <div  class="header pull-left" 
+                ng-class="{greyed:version.hidden}"
+                style="height:35px;">
+            <strong >Version: {{version.name}} / Due to: {{convertDueDate(version.due_date)}}</strong>
+          </div>
 
-            <div class="btn-group pull-right">
-              <button type="button" class="btn btn-info btn-xs"
-                      ng-click="versionHideClick(version)"
-                      data-toggle="button"
-                      >Hide version</button>
+          <div class="pull-left" ng-show="version.loadInProgress" style="margin-top: -1px; margin-left: 10px;">
+            <img src="img/ajax-loader.gif"/>
+          </div>
 
-              <button type="button" class="btn btn-info btn-xs" 
-                      ng-click="versionExpandClick(version)"
-                      data-toggle="button"
-                      >Show trackers</button>
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-primary btn-xs"
+                    ng-click="versionHideClick(version)"
+                    data-toggle="button"
+                    >Hide version</button>
 
-              <button type="button" class="btn btn-info btn-xs"
-                      ng-clickz="versionHideClick(version)"
-                      ><i class="icon-fire icon-white"></i></button>
+            <button type="button" class="btn btn-primary btn-xs" 
+                    ng-click="versionExpandClick(version)"
+                    data-toggle="button"
+                    >Show trackers</button>
 
-              <button type="button" class="btn btn-info btn-xs"
-                      ng-click="versionReloadClick(project, version)"
-                      ><i class="icon-refresh icon-white"></i></button>
-            </div>
-            <div class="pull-right" ng-show="version.loadInProgress" style="padding-top: 2px; margin-right: 10px;">
-              <img src="img/ajax-loader.gif"/>
-            </div>
+            <button type="button" class="btn btn-primary btn-xs"
+                    ng-clickz="versionHideClick(version)"
+                    ><i class="icon-fire icon-white"></i></button>
 
-            <table class="table table-condensed table-bordered" style="margin-top: 10px;" ng-hide="version.hidden">
-              <thead>
-                <tr>
-                  <th>Tracker</th>
-                  <th class="align-center" ng-repeat="status in project.customStatuses">{{status.title}}</th>
-                  <th class="align-center">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="tracker in project.issueTrackers" ng-show="version.expanded">
-                  <td>{{getTrackerName(tracker)}}</td>
-                  <td class="align-center"
-                    ng-class="{greyed:version.loadInProgress}" 
+            <button type="button" class="btn btn-primary btn-xs"
+                    ng-click="versionReloadClick(project, version)"
+                    ><i class="icon-refresh icon-white"></i></button>
+          </div>
+
+
+
+          <table class="table table-condensed table-bordered" style="margin-top: 10px;" ng-hide="version.hidden">
+            <thead>
+              <tr>
+                <th>Tracker</th>
+                <th class="align-center" ng-repeat="status in project.customStatuses">{{status.title}}</th>
+                <th class="align-center">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="tracker in project.issueTrackers" ng-show="version.expanded">
+                <td>{{getTrackerName(tracker)}}</td>
+                <td class="align-center"
+                  ng-class="{greyed:version.loadInProgress}" 
+                  ng-repeat="status in project.customStatuses">
+                    <a  data-toggle="" 
+                        href=""
+                        ng-click="issuesModalClick(version.getIssuesByCustomStatusAndTracker(status.title, tracker))"
+                        class="">{{version.getCountByCustomStatusAndTracker(status.title, tracker)}}</a>
+
+                </td>
+                <td class="align-center"
+                  ng-class="{greyed:version.loadInProgress}">
+                    <a  data-toggle="" 
+                      href=""
+                      ng-click="issuesModalClick(version.getTrackerIssues(tracker))"
+                      class="">{{version.getTrackerCount(tracker)}}</a>
+                </td>
+              </tr>
+              <tr>
+                <th>All Trackers</th>
+                <td class="align-center"
+                    ng-class="{greyed:version.loadInProgress}"
                     ng-repeat="status in project.customStatuses">
-                      <a  data-toggle="" 
-                          href=""
-                          ng-click="issuesModalClick(version.getIssuesByCustomStatusAndTracker(status.title, tracker))"
-                          class="">{{version.getCountByCustomStatusAndTracker(status.title, tracker)}}</a>
-
-                  </td>
-                  <td class="align-center"
+                    <a  data-toggle="" 
+                      href=""
+                      ng-click="issuesModalClick(version.getCustomStatusIssues(status.title))"
+                      class="">{{version.getCustomStatusCount(status.title)}}</a>
+                </td>
+                <td class="align-center"
                     ng-class="{greyed:version.loadInProgress}">
-                      <a  data-toggle="" 
-                        href=""
-                        ng-click="issuesModalClick(version.getTrackerIssues(tracker))"
-                        class="">{{version.getTrackerCount(tracker)}}</a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>All Trackers</th>
-                  <td class="align-center"
-                      ng-class="{greyed:version.loadInProgress}"
-                      ng-repeat="status in project.customStatuses">
-                      <a  data-toggle="" 
-                        href=""
-                        ng-click="issuesModalClick(version.getCustomStatusIssues(status.title))"
-                        class="">{{version.getCustomStatusCount(status.title)}}</a>
-                  </td>
-                  <td class="align-center"
-                      ng-class="{greyed:version.loadInProgress}">
-                      <a 
-                        href=""
-                        ng-click="openDialog('dddd')"
-                        class="">{{version.issues.length}}</a>
-                      
-                      <a data-toggle="modal" href="#{{getModalId(project, version, 'total')}}" >Launch demo modal</a>
+                    <a 
+                      href=""
+                      ng-click="openDialog('dddd')"
+                      class="">{{version.issues.length}}</a>
+                    
+                    <a data-toggle="modal" href="#{{getModalId(project, version, 'total')}}" >Launch demo modal</a>
 
-                      <div class="modal fade" 
-                            id="{{getModalId(project, version, 'total')}}" 
-                            tabindex="-1" role="dialog" 
-                            aria-labelledby="myModalLabel" 
-                            aria-hidden="true">
+                    <div class="modal fade" 
+                          id="{{getModalId(project, version, 'total')}}" 
+                          tabindex="-1" role="dialog" 
+                          aria-labelledby="myModalLabel" 
+                          aria-hidden="true">
 
-                           <div ng-include src="issueGridTemplate"></div>
+                         <div ng-include src="issueGridTemplate"></div>
 
-                      </div>
+                    </div>
 
-                  </td>
-                </tr>                  
-              </tbody>
-            </table>
+                </td>
+              </tr>                  
+            </tbody>
+          </table>
 
 
 
