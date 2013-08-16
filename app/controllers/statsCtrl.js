@@ -10,6 +10,12 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
     $scope.projects = appData.projects;
     $scope.issueGridTemplate = 'app/views/_issueGrid.html';
 
+    $('#issueGridModal').on('show', 
+        function (event) {
+          alert();
+          console.log('ddddddddddddd');
+        });
+
     $scope.convertDueDate = function(dueDate) {
       var dueStr = dueDate;
       if (dueStr == undefined) dueStr = 'No Date';
@@ -52,5 +58,16 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
 
 
 
+    // dialogCtrl = function ($scope) {
+    //  $scope.createDlg = function() {
+    //       var dialogScope = $scope.$new(); 
+    //       dialogScope.text = "text"
+    //   }
+    // }
+
+    // $parse("<div>{{text}}</div>")(dialogScope);
+
 
 }
+
+
