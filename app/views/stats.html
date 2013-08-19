@@ -20,6 +20,10 @@
 
           <div class="btn-group pull-right">
             <button type="button" class="btn btn-primary btn-xs"
+                    ng-click="versionReloadClick(project, version)"
+                    ><span class="glyphicon glyphicon-refresh"></span></button>
+
+            <button type="button" class="btn btn-primary btn-xs"
                     ng-click="versionHideClick(version)"
                     data-toggle="button"
                     >Hide version</button>
@@ -29,15 +33,13 @@
                     data-toggle="button"
                     >Show trackers</button>
 
+<!-- 
             <button type="button" class="btn btn-primary btn-xs"
                     ng-clickz="versionHideClick(version)"
                     ><span class="glyphicon glyphicon-fire"></span></button>
+ -->
 
 
-
-            <button type="button" class="btn btn-primary btn-xs"
-                    ng-click="versionReloadClick(project, version)"
-                    ><span class="glyphicon glyphicon-refresh"></span></button>
 
 
           </div>
