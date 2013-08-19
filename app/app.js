@@ -1,4 +1,4 @@
-var appModule = angular.module('appModule', ['ngGrid']);
+var appModule = angular.module('appModule', []);
 
 appModule.config(['$routeProvider', function($routeProvider, $locationProvider) {
 
