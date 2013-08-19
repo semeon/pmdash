@@ -2,8 +2,9 @@
 
     var modalService = {};
 
-    modalService.issuesGridModal = function ($scope, data) { 
+    modalService.issuesGridModal = function ($scope, title, data) { 
       var modalScope = $scope.$new();
+      modalScope.title = title;
       modalScope.data = data;
 
       var htmlTemplate = '';
@@ -13,16 +14,16 @@
 
       htmlTemplate +=       '<div class="modal-header">';
       htmlTemplate +=         '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-      htmlTemplate +=         '<h4 class="modal-title">Modal title</h4>';
+      htmlTemplate +=         '<h4 class="modal-title">Issues: {{title}}</h4>';
       htmlTemplate +=       '</div>';
 
 
       htmlTemplate +=       '<div class="modal-body">';
-      htmlTemplate +=       '{{data}}';
+//      htmlTemplate +=       '{{data}}';
       htmlTemplate +=       '</div>';
 
       htmlTemplate +=       '<div class="modal-footer">';
-      htmlTemplate +=         '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+      htmlTemplate +=         '<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>';
       htmlTemplate +=       '</div>';
 
       htmlTemplate +=     '</div>';

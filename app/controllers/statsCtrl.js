@@ -8,8 +8,6 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals) {
     var redmineSettings = $rootScope.settings.redmineSettings;
 
     $scope.projects = appData.projects;
-    $scope.issueGridTemplate = 'app/views/_issueGrid.html';
-
 
     $scope.convertDueDate = function(dueDate) {
       var dueStr = dueDate;
@@ -46,24 +44,8 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals) {
       console.log(log_ctrl + 'version.hidden: ' + version.hidden);
     }
 
-    $scope.getModalId = function (project, version, str) {
-      var id = 'modal_' +  project.id + '_' + version.id + '_' + str;
-      return id;
-    }
-
-
-
-    // $scope.openModal = function (data) {
-
-    //   Modals.issuesGridModal(data);
-
-
-
-
-    $scope.openModal = function (body) {
-
-      Modals.issuesGridModal($scope, body);
-
+    $scope.openIssuesGrid = function (title, data) {
+      Modals.issuesGridModal($scope, title, data);
     }
 
 }

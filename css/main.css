@@ -7,7 +7,7 @@
 }
 
 .header {
-    color: #666;
+    color: #666! important;
     font-weight: bold;
 }
 
@@ -41,24 +41,3 @@ body {
     padding-top: 70px; 
 }
 
-
-/*
-.modal {
-    /* new custom width */
-    width: 1200px;
-     must be half of the width, minus scrollbar on the left (30px) 
-    margin-left: -600px;
-}*/
-
-
-/*td.align-right {
-    text-align: right!important;
-}
-
-td.align-left {
-    text-align: left!important;
-}
-
-th, td {
-    background-color: white;
-}*/
