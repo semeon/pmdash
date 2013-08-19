@@ -1,4 +1,4 @@
-function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
+function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals) {
     var log_ctrl = ' - StatsCtrl: ';
     console.log('');
     console.log('StatsCtrl Controller started');
@@ -10,11 +10,6 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
     $scope.projects = appData.projects;
     $scope.issueGridTemplate = 'app/views/_issueGrid.html';
 
-    $('#issueGridModal').on('show', 
-        function (event) {
-          alert();
-          console.log('ddddddddddddd');
-        });
 
     $scope.convertDueDate = function(dueDate) {
       var dueStr = dueDate;
@@ -58,15 +53,18 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader) {
 
 
 
-    // dialogCtrl = function ($scope) {
-    //  $scope.createDlg = function() {
-    //       var dialogScope = $scope.$new(); 
-    //       dialogScope.text = "text"
-    //   }
-    // }
+    // $scope.openModal = function (data) {
 
-    // $parse("<div>{{text}}</div>")(dialogScope);
+    //   Modals.issuesGridModal(data);
 
+
+
+
+    $scope.openModal = function (body) {
+
+      Modals.issuesGridModal($scope, body);
+
+    }
 
 }
 
