@@ -70,6 +70,7 @@ function Settings() {
 	this.redmineSettings = {
 	    // Домен редмайн
 		redmineUrl:         'http://speradze/',
+		redmineRealUrl:         'https://redmine.firstlinesoftware.com/',
 
 	    // Это ключ, который позволяет вам не логиниться в редмайн
 		userKey:            '',

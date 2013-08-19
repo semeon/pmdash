@@ -1,4 +1,4 @@
-var appModule = angular.module('appModule', []);
+var appModule = angular.module('appModule', ['ngGrid']);
 
 appModule.config(['$routeProvider', function($routeProvider, $locationProvider) {
 
@@ -8,6 +8,4 @@ appModule.config(['$routeProvider', function($routeProvider, $locationProvider) 
       otherwise({redirectTo: '/welcome'});
 
 }]);
-
-
 

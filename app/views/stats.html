@@ -62,7 +62,7 @@
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 getTrackerName(tracker) +  ' / ' +
                                                 status.title,
-                                                version.issues)"
+                                                version.getIssuesByCustomStatusAndTracker(status.title, tracker))"
                        >{{version.getCountByCustomStatusAndTracker(status.title, tracker)}}</a>
 
                 </td>
@@ -72,7 +72,7 @@
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 getTrackerName(tracker) +  ' / ' +
                                                 'All Issues',
-                                                version.issues)"
+                                                version.getTrackerIssues(tracker))"
                        >{{version.getTrackerCount(tracker)}}</a>
 
                 </td>
@@ -87,7 +87,7 @@
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 'All Trackers' +  ' / ' +
                                                 status.title,
-                                                version.issues)"
+                                                version.getCustomStatusIssues(status.title))"
                        >{{version.getCustomStatusCount(status.title)}}</a>
 
 

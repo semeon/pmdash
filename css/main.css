@@ -41,3 +41,7 @@ body {
     padding-top: 70px; 
 }
 
+.modal-dialog {
+    /* new custom width */
+    width: 90%;
+}
