@@ -66,7 +66,6 @@
 
 
         htmlTemplate +=             '<td>{{getAssignee(issue)}}</td>';
-        htmlTemplate +=             '<td>{{test()}}</td>';
         htmlTemplate +=         '</tr>';
 
         htmlTemplate +=             '<tbody>';
