@@ -60,22 +60,29 @@
                 <td class="align-center"
                   ng-class="{greyed:version.loadInProgress}" 
                   ng-repeat="status in project.customStatuses">
-                    <a href="" 
+                    <a href=""
+                       ng-hide="version.getCountByCustomStatusAndTracker(status.title, tracker)==0" 
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 getTrackerName(tracker) +  ' / ' +
                                                 status.title,
                                                 version.getIssuesByCustomStatusAndTracker(status.title, tracker))"
                        >{{version.getCountByCustomStatusAndTracker(status.title, tracker)}}</a>
 
+                    <span ng-show="version.getCountByCustomStatusAndTracker(status.title, tracker)==0">0</span>
+
+
                 </td>
                 <td class="align-center"
                   ng-class="{greyed:version.loadInProgress}">
-                    <a href="" 
+                    <a href=""
+                       ng-hide="version.getTrackerCount(tracker)==0"
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 getTrackerName(tracker) +  ' / ' +
                                                 'All Issues',
                                                 version.getTrackerIssues(tracker))"
                        >{{version.getTrackerCount(tracker)}}</a>
+
+                    <span ng-show="version.getTrackerCount(tracker)==0">0</span>
 
                 </td>
               </tr>
@@ -85,23 +92,28 @@
                     ng-class="{greyed:version.loadInProgress}"
                     ng-repeat="status in project.customStatuses">
 
-                    <a href="" 
+                    <a href=""
+                       ng-hide="version.getCustomStatusCount(status.title)==0" 
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 'All Trackers' +  ' / ' +
                                                 status.title,
                                                 version.getCustomStatusIssues(status.title))"
                        >{{version.getCustomStatusCount(status.title)}}</a>
 
+                    <span ng-show="version.getCustomStatusCount(status.title)==0">0</span>
 
                 </td>
                 <td class="align-center"
                     ng-class="{greyed:version.loadInProgress}">
-                    <a href="" 
+                    <a href=""
+                       ng-hide="version.issues.length==0"
                        ng-click="openIssuesGrid(version.name + ' / ' + 
                                                 'All Trackers' +  ' / ' +
                                                 'All Issues', 
                                                 version.issues)"
                        >{{version.issues.length}}</a>
+                    <span ng-show="version.issues.length==0">0</span>
+
                 </td>
               </tr>                  
             </tbody>
