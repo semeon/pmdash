@@ -44,7 +44,13 @@
 
         htmlTemplate +=       '<div class="modal-body">';
 
-        htmlTemplate +=         '<table class="table table-bordered table-striped table-condensed table-hover">';
+
+
+        htmlTemplate +=        '<input type="search" class="form" placeholder="type here.."/>';
+
+
+
+        htmlTemplate +=         '<table class="table table-bordered table-striped table-condensed table-hover dataTable" id="issuesGrid">';
         htmlTemplate +=             '<thead>';
         htmlTemplate +=                 '<th>#</th>';
         htmlTemplate +=                 '<th>Status</th>';
