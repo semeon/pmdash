@@ -46,11 +46,22 @@
 
 
 
-        htmlTemplate +=        '<input type="search" class="form" placeholder="type here.."/>';
+        // htmlTemplate +=    '<div class="col-md-3">';
+        // htmlTemplate +=        'Search: <input type="search" class="form-control" placeholder="type here.."/>';
+        // htmlTemplate +=    '</div>';
 
 
+        htmlTemplate +=  '<div class="form-group">';
+        // htmlTemplate +=    '<label class="col-md-1 control-label">Search:</label>';
+        htmlTemplate +=    '<div class="col-md-3">';
+        htmlTemplate +=    '</div>';
+        htmlTemplate +=  '</div>';
 
-        htmlTemplate +=         '<table class="table table-bordered table-striped table-condensed table-hover dataTable" id="issuesGrid">';
+        htmlTemplate +=      '<input type="search" class="form-control input-sm" ng-model="query" placeholder="Search">';
+
+        htmlTemplate +=        '<br/>';
+
+        htmlTemplate +=         '<table class="table table-bordered table-striped table-condensed table-hover" id="issuesGrid">';
         htmlTemplate +=             '<thead>';
         htmlTemplate +=                 '<th>#</th>';
         htmlTemplate +=                 '<th>Status</th>';
@@ -60,7 +71,7 @@
         htmlTemplate +=             '</thead>';
         htmlTemplate +=             '<tbody>';
 
-        htmlTemplate +=         '<tr ng-repeat="issue in issues">';
+        htmlTemplate +=         '<tr ng-repeat="issue in issues | filter:query">';
         htmlTemplate +=             '<td>';
         htmlTemplate +=                 '<a href="{{getIssueUrl(issue)}}" target="_blank">';
         htmlTemplate +=                     '#{{issue.id}}';
