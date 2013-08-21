@@ -22,7 +22,7 @@
       modalScope.getAssignee = function(issue) {
         var assignee = 'Nobody';
         if (issue.assigned_to) assignee = issue.assigned_to.name;
-
+        issue.assigneeStr = assignee;
         return assignee;
       }
 
@@ -38,26 +38,71 @@
 
         htmlTemplate +=       '<div class="modal-header">';
         htmlTemplate +=         '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-        htmlTemplate +=         '<h4 class="modal-title">Issues: {{title}}</h4>';
+        htmlTemplate +=         '<h4 class="modal-title">Issues: {{title}} ({{issues.length}})</h4>';
         htmlTemplate +=       '</div>';
 
 
         htmlTemplate +=       '<div class="modal-body">';
 
 
+        // htmlTemplate +=       '<div class="row">';
+        // htmlTemplate +=         '<div class="col-md-2">Sort by: </div>';
+        // htmlTemplate +=         '<div class="col-md-2"><input type="radio" name="sort" value="id"/> label 1</div>';
+        // htmlTemplate +=         '<div class="col-md-2"><input type="radio" name="sort" value="tracker.name"/> label 2</div>';
+        // htmlTemplate +=         '<div class="col-md-2"><input type="radio" name="sort" value="status.name"/> label 3</div>';
+        // htmlTemplate +=         '<div class="col-md-2"><input type="radio" name="sort" value="value="subject"/> label 3</div>';
+        // htmlTemplate +=         '<div class="col-md-2"><input type="radio" name="sort" value="assigneeStr"/> label 3</div>';
+        // htmlTemplate +=       '</div>';
 
-        // htmlTemplate +=    '<div class="col-md-3">';
-        // htmlTemplate +=        'Search: <input type="search" class="form-control" placeholder="type here.."/>';
-        // htmlTemplate +=    '</div>';
+
+        htmlTemplate +=       '<div class="row">';
+        htmlTemplate +=         '<div class="col-md-1 col-lg-offset-5 header" style="padding-top: 4px;"><strong>Search:</strong></div>';
+        htmlTemplate +=         '<div class="col-md-2"><input type="search" class="form-control input-sm" ng-model="query" placeholder="Type to search"></div>';
+
+        htmlTemplate +=         '<div class="col-md-2 header" style="padding-top: 4px;"><strong class="pull-right">Order by:</strong></div>';
+        htmlTemplate +=         '<div class="col-md-2">';
+        htmlTemplate +=           '<select class="form-control input-sm" ng-model="orderProp">';
+        htmlTemplate +=             '<option value="id" ng-selected="' +  "'selected'"  +  '">Number</option>';
+        htmlTemplate +=             '<option value="tracker.name">Tracker</option>';
+        htmlTemplate +=             '<option value="status.name">Status</option>';
+        htmlTemplate +=             '<option value="subject">Subject</option>';
+        htmlTemplate +=             '<option value="assigneeStr">Assignee</option>';
+        htmlTemplate +=           '</select>';
+        htmlTemplate +=         '</div>';
+        htmlTemplate +=       '</div>';
 
 
-        htmlTemplate +=  '<div class="form-group">';
-        // htmlTemplate +=    '<label class="col-md-1 control-label">Search:</label>';
-        htmlTemplate +=    '<div class="col-md-3">';
-        htmlTemplate +=    '</div>';
-        htmlTemplate +=  '</div>';
 
-        htmlTemplate +=      '<input type="search" class="form-control input-sm" ng-model="query" placeholder="Search">';
+        // htmlTemplate +=       '<form class="form-inline" role="form">';
+        // // htmlTemplate +=         '<div class="form-group">';
+        // // htmlTemplate +=           '<label class="sr-only" for="exampleInputEmail2">Email address</label>';
+        // // htmlTemplate +=           '<input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email"/>';
+        // // htmlTemplate +=         '</div>';
+        // // htmlTemplate +=         '<div class="form-group">';
+        // // htmlTemplate +=           '<label class="sr-only" for="exampleInputPassword2">Password</label>';
+        // // htmlTemplate +=           '<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password"/>';
+        // // htmlTemplate +=         '</div>';
+        // htmlTemplate +=         '<div class="radio">';
+        // htmlTemplate +=           '<label>';
+        // htmlTemplate +=             '<input type="radio" name="optionsRadios"/> label 1';
+        // htmlTemplate +=             '<input type="radio" name="optionsRadios"/> label 2';
+        // htmlTemplate +=           '</label>';
+        // htmlTemplate +=         '</div>';
+        // htmlTemplate +=       '</form>';
+
+
+
+        // htmlTemplate +=       '<input type="search" class="form-control input-sm" ng-model="query" placeholder="Type to search">';
+
+        // htmlTemplate +=       '<select ng-model="orderProp">';
+        // htmlTemplate +=         '<option value="id">Number</option>';
+        // htmlTemplate +=         '<option value="tracker.name">Tracker</option>';
+        // htmlTemplate +=         '<option value="status.name">Status</option>';
+        // htmlTemplate +=         '<option value="subject">Subject</option>';
+        // htmlTemplate +=         '<option value="assigneeStr">Assignee</option>';
+        // htmlTemplate +=       '</select>';
+
+
 
         htmlTemplate +=        '<br/>';
 
@@ -71,7 +116,7 @@
         htmlTemplate +=             '</thead>';
         htmlTemplate +=             '<tbody>';
 
-        htmlTemplate +=         '<tr ng-repeat="issue in issues | filter:query">';
+        htmlTemplate +=         '<tr ng-repeat="issue in issues | filter:query | orderBy:orderProp">';
         htmlTemplate +=             '<td>';
         htmlTemplate +=                 '<a href="{{getIssueUrl(issue)}}" target="_blank">';
         htmlTemplate +=                     '#{{issue.id}}';
