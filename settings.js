@@ -25,13 +25,15 @@ function Settings() {
 		// 	Группы статусов, по которым собирается статистика
 		// 		"title" - их названия
 		// 		"includes" - статусы редмайна, которые следует включать в группы
+		// 		"statistic" - включаь в снепшоты статистики или нет (обчно относится ко всем незакрытым задачам)
 		// 			Например, 1 - New, 2 - In Progress
 		// 			Все статусы ниже в Redmine Settings
 		// 	customStatuses: [
-		// 						{title: 'Development', 	includes: [1, 2, 19]},
-		// 						{title: 'Testing', 		includes: [3, 6, 18]},
-		// 						{title: 'Blocked', 		includes: [4, 14]},
-		// 						{title: 'Done', 		includes: [5]}
+		// {title: 'Not Started', 	includes: [1], 				statistic: true},
+		// {title: 'In Progress', 	includes: [2, 19], 		statistic: true},
+		// {title: 'Blocked', 			includes: [4, 14], 		statistic: true},
+		// {title: 'Testing', 			includes: [3, 6, 18], statistic: true},
+		// {title: 'Done', 					includes: [5], 				statistic: false}
 		// 					]
 		// },
 
@@ -42,11 +44,11 @@ function Settings() {
 				title: 'Parking Server',
 				issueTrackers: [1, 2, 4, 5, 6, 10], 
 				customStatuses: [
-					{title: 'Not Started', 	includes: [1]},
-					{title: 'In Progress', 	includes: [2, 19]},
-					{title: 'Blocked', 	includes: [4, 14]},
-					{title: 'Testing', 	includes: [3, 6, 18]},
-					{title: 'Done', 	includes: [5]}
+					{title: 'Not Started', 	includes: [1], 				statistic: true},
+					{title: 'In Progress', 	includes: [2, 19], 		statistic: true},
+					{title: 'Blocked', 			includes: [4, 14], 		statistic: true},
+					{title: 'Testing', 			includes: [3, 6, 18], statistic: true},
+					{title: 'Done', 				includes: [5], 				statistic: false}
 				]
 			}
 			// ,
@@ -125,7 +127,7 @@ function Settings() {
 
 
 	this.appSettings = {
-		statistics: false,
+		statistics: true,
 		appStatus: 'testing',
 		dbUri: 'http://speradze:5984/db/'
 	},

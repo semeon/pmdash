@@ -35,10 +35,18 @@
                     data-toggle="button"
                     >Show trackers</button>
 
-<!-- 
             <button type="button" class="btn btn-primary btn-xs"
-                    ng-clickz="versionHideClick(version)"
+                    ng-class="{disabled:version.hidden}"
+                    ng-click="getBurndownClick(project, version)"
                     ><span class="glyphicon glyphicon-fire"></span></button>
+
+            <button type="button" class="btn btn-primary btn-xs" 
+                    ng-class="{disabled:version.hidden}"
+                    ng-click="saveSnaphotClick(project, version)"
+                    >Save snapshot</button>
+
+
+<!-- 
  -->
 
 
