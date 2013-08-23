@@ -9,6 +9,7 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals, DB) {
 
     $scope.projects = appData.projects;
 
+
     $scope.convertDueDate = function(dueDate) {
       var dueStr = dueDate;
       if (dueStr == undefined) dueStr = 'No Date';
@@ -19,6 +20,17 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals, DB) {
       var trackerName = '';
       trackerName = redmineSettings.issueTrackersMap[String(trackerId)].name;
       return trackerName;
+    }
+
+
+    <!-- BUTTONS -->
+
+    $scope.projectHideClick = function(project) {
+      if (project.hidden == undefined) {
+        project.hidden = true;
+      } else {
+        project.hidden = !project.hidden;
+      }
     }
 
     $scope.versionReloadClick = function(project, version) {
