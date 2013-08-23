@@ -23,51 +23,62 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals, DB) {
     }
 
 
-    <!-- BUTTONS -->
+    // BUTTONS
+    // ---------------------------
 
-    $scope.projectHideClick = function(project) {
-      if (project.hidden == undefined) {
-        project.hidden = true;
-      } else {
-        project.hidden = !project.hidden;
+      $scope.projectHideClick = function(project) {
+        if (project.hidden == undefined) {
+          project.hidden = true;
+        } else {
+          project.hidden = !project.hidden;
+        }
       }
-    }
 
-    $scope.versionReloadClick = function(project, version) {
-      console.log(log_ctrl + 'versionReloadClick: ' + project.id + ' ' + version.name);
-      version.reset();
-      ProjectDataLoader.loadVersionIssuesData(project, version);
-    }
-
-    $scope.versionHideClick = function(version) {
-      if (version.hidden == undefined) {
-        version.hidden = true;
-      } else {
-        version.hidden = !version.hidden;
+      $scope.versionReloadClick = function(project, version) {
+        console.log(log_ctrl + 'versionReloadClick: ' + project.id + ' ' + version.name);
+        version.reset();
+        ProjectDataLoader.loadVersionIssuesData(project, version);
       }
-    }
 
-    $scope.versionExpandClick = function(version) {
-      if (version.expanded == undefined) {
-        version.expanded = true;
-      } else {
-        version.expanded = !version.expanded;
+      $scope.versionHideClick = function(version) {
+        if (version.hidden == undefined) {
+          version.hidden = true;
+        } else {
+          version.hidden = !version.hidden;
+        }
       }
-      console.log(log_ctrl + 'version.hidden: ' + version.hidden);
-    }
 
-    $scope.saveSnaphotClick = function (project, version) {
-      DB.updateVersionHistory(project, version);
-    }
+      $scope.versionExpandClick = function(version) {
+        if (version.expanded == undefined) {
+          version.expanded = true;
+        } else {
+          version.expanded = !version.expanded;
+        }
+        console.log(log_ctrl + 'version.hidden: ' + version.hidden);
+      }
 
-    $scope.getBurndownClick = function (project, version) {
-      DB.getVersionHistory(project, version, $scope, Modals.burndownModal);
-    }
+      $scope.saveSnaphotClick = function (project, version) {
+        DB.updateVersionHistory(project, version);
+      }
+
+      $scope.getBurndownClick = function (project, version) {
+        DB.getVersionHistory(project, version, $scope, Modals.burndownModal);
+      }
 
 
-    $scope.openIssuesGrid = function (title, data) {
-      Modals.issuesGridModal($scope, title, data);
-    }
+      $scope.fillDB = function(project, version) {
+        console.log(log_ctrl + 'Fill DB called');
+        DB.writeDummyData(project, version);
+      }
+
+    // Grid links
+    // -------------------------------
+
+      $scope.openIssuesGrid = function (title, data) {
+        Modals.issuesGridModal($scope, title, data);
+      }
+
+
 
 
 

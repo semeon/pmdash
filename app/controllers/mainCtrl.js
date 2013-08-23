@@ -1,4 +1,4 @@
-function MainCtrl($scope, $rootScope, $location) {
+function MainCtrl($scope, $rootScope, $location, DB) {
     var log_ctrl = ' - DataLoadCtrl: ';
     console.log('');
     console.log('MainCtrl Controller started');

@@ -4,8 +4,7 @@ function AppCtrl($scope, $rootScope) {
     console.log('AppCtrl Controller started');
 
     $rootScope.settings = new Settings();
-	$rootScope.data = new DataCtrl();
-	$rootScope.data.projects = {};	
-	
+		$rootScope.data = new DataCtrl();
+		$rootScope.data.projects = {};	
 
 }

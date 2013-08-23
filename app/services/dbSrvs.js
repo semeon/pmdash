@@ -5,6 +5,8 @@ appModule.factory('DB', ['$http', '$rootScope', function($http, $rootScope) {
     var timeStampFormat = 'YYYY-MM-DD_hh:mm';
     var dbService = {};
 
+
+
 	// ---------------------------------------------------------------------
 	// READ DATA
 	// ---------------------------------------------------------------------
@@ -12,7 +14,7 @@ appModule.factory('DB', ['$http', '$rootScope', function($http, $rootScope) {
 			var docId = project.id + '_' + version.id;
 
 			function successCallback(data) {
-				callback(scope, 'title', data);
+				callback(scope, version, data);
 			}
 
 			function errorCallback(data) {
@@ -27,36 +29,44 @@ appModule.factory('DB', ['$http', '$rootScope', function($http, $rootScope) {
 	// UPDATE DATA
 	// ---------------------------------------------------------------------
 
-		function updateHistory(history, historySnapshot) {
-			console.log(log_ctrl + 'updateHistory: ' + history._id);
-			console.log(log_ctrl + 'updateHistory rev: ' + history._rev);
+		function updateHistory(historyDoc, historySnapshot) {
+			console.log(log_ctrl + 'updateHistory: ' + historyDoc._id);
+			console.log(log_ctrl + 'updateHistory rev: ' + historyDoc._rev);
 
 			var date = moment().format(timeStampFormat);
-			history[date] = historySnapshot.currentIssuesNum;
-
+			
+			if (historySnapshot.records) {
+				// DUMMY DATA
+				historyDoc.records = historySnapshot.records;
+			} else {
+				// NORMAL FLOW
+				historyDoc.records[date] = historySnapshot.currentIssuesNum;
+			}
 
 			function success(data){
-				console.log(log_ctrl + 'Document ' + history._id + ' successfully saved to DB.');
+				console.log(log_ctrl + 'Document ' + historyDoc._id + ' successfully saved to DB.');
 			};
 
-		 	dbRequest('PUT', history._id, JSON.stringify(history), success);	
+		 	dbRequest('PUT', historyDoc._id, JSON.stringify(historyDoc), success);	
 		}
 
 		function createVersionHistory(historySnapshot) {
 				var docId = historySnapshot.docId;
-				history['_id'] = historySnapshot.docId;
-				history['project'] = historySnapshot.projectId;
-				history['version'] = historySnapshot.versionName;
-				return history;
+				var historyDoc = {};
+				historyDoc['_id'] = historySnapshot.docId;
+				historyDoc['project'] = historySnapshot.projectId;
+				historyDoc['version'] = historySnapshot.versionName;
+				historyDoc.records = {};
+				return historyDoc;
 		}
 
 		function docNotFound(historySnapshot) {
-			var history = createVersionHistory(historySnapshot);
-			updateHistory(history, historySnapshot);
+			var historyDoc = createVersionHistory(historySnapshot);
+			updateHistory(historyDoc, historySnapshot);
 		}
 
-		function docFound(history, historySnapshot) {
-			updateHistory(history, historySnapshot);
+		function docFound(historyDoc, historySnapshot) {
+			updateHistory(historyDoc, historySnapshot);
 		}
 
 
@@ -97,6 +107,83 @@ appModule.factory('DB', ['$http', '$rootScope', function($http, $rootScope) {
 			requestVersionHistory(historySnapshot, docFound, docNotFound);
 		}
 
+
+	// ---------------------------------------------------------------------
+	// WRITE DUMMY DATA
+	// ---------------------------------------------------------------------
+		dbService.writeDummyData = function(project, version) {
+
+			console.log(log_ctrl + 'Writing dummy data..');
+			var historySnapshot = {};
+			historySnapshot.docId = project.id + '_' + version.id;
+			historySnapshot.projectId = project.id;
+			historySnapshot.versionId = version.id;
+			historySnapshot.versionName = version.name;
+			historySnapshot.records = {};
+
+			var number = 22;
+
+			for (var i=1; i<15; i++) {
+
+				var date = '08.';
+
+				var random = Math.round( Math.random()*4 ) - 2;
+				number = number - 1 + random;
+
+				console.log(log_ctrl + '   i: ' + i);
+				console.log(log_ctrl + 'date: ' + date);
+				console.log(log_ctrl + 'rand: ' + random);
+				console.log(log_ctrl + 'numb: ' + number);
+				console.log('');
+
+				if (i<10) {
+					date += '0';
+				}
+				date += i;
+				historySnapshot.records[date] = {};
+				historySnapshot.records[date].value = number;
+			}
+			requestVersionHistory(historySnapshot, docFound, docNotFound);
+		}
+
+
+		dbService.writeDummyData2 = function(project, version) {
+
+			console.log(log_ctrl + 'Writing dummy data..');
+			var historySnapshot = {};
+			historySnapshot.docId = project.id + '_' + version.id;
+			historySnapshot.projectId = project.id;
+			historySnapshot.versionId = version.id;
+			historySnapshot.versionName = version.name;
+			historySnapshot.records = {};
+
+			var number = 35;
+
+			for (var i=1; i<20; i++) {
+
+				var date = '2013-08-';
+
+				var random = Math.round( Math.random()*4 ) - 2;
+				number = number - 1 + random;
+
+				console.log(log_ctrl + '   i: ' + i);
+				console.log(log_ctrl + 'date: ' + date);
+				console.log(log_ctrl + 'rand: ' + random);
+				console.log(log_ctrl + 'numb: ' + number);
+				console.log('');
+
+				if (i<10) {
+					date += '0';
+				}
+				date += i;
+				
+				historySnapshot.records[date] = {};
+				historySnapshot.records[date].date = date;
+				historySnapshot.records[date].value = number;
+
+			}
+			requestVersionHistory(historySnapshot, docFound, docNotFound);
+		}
 
 
 	// Genric request

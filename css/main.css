@@ -41,7 +41,12 @@ body {
     padding-top: 70px; 
 }
 
-.modal-dialog {
+.issuesGridModal {
     /* new custom width */
     width: 90%;
+}
+
+.burndownModal {
+    /* new custom width */
+    min-width: 90%;
 }
