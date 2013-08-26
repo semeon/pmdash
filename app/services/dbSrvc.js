@@ -1,4 +1,4 @@
-appModule.factory('DB', ['$http', '$rootScope', function($http, $rootScope) {
+appModule.factory('DB', ['$http', '$rootScope', 'BurnDownChart', function($http, $rootScope, BurnDownChart) {
 
     var log_ctrl = ' - DbSrvs: ';
     var appSettings = $rootScope.settings.appSettings;
@@ -6,15 +6,14 @@ appModule.factory('DB', ['$http', '$rootScope', function($http, $rootScope) {
     var dbService = {};
 
 
-
 	// ---------------------------------------------------------------------
 	// READ DATA
 	// ---------------------------------------------------------------------
-		dbService.getVersionHistory = function(project, version, scope, callback) {
+		dbService.getVersionHistory = function(project, version) {
 			var docId = project.id + '_' + version.id;
 
 			function successCallback(data) {
-				callback(scope, version, data);
+				BurnDownChart.create(project, version, data);
 			}
 
 			function errorCallback(data) {

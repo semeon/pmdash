@@ -1,4 +1,4 @@
-function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals, DB) {
+function StatsCtrl($scope, $rootScope, ProjectDataLoader, IssueGrid, DB) {
     var log_ctrl = ' - StatsCtrl: ';
     console.log('');
     console.log('StatsCtrl Controller started');
@@ -62,7 +62,8 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals, DB) {
       }
 
       $scope.getBurndownClick = function (project, version) {
-        DB.getVersionHistory(project, version, $scope, Modals.burndownModal);
+        // DB.getVersionHistory(project, version, $scope, Modals.burndownModal);
+        DB.getVersionHistory(project, version);
       }
 
 
@@ -75,7 +76,10 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, Modals, DB) {
     // -------------------------------
 
       $scope.openIssuesGrid = function (title, data) {
-        Modals.issuesGridModal($scope, title, data);
+
+        IssueGrid.create(title, data);
+
+        //Modals.issuesGridModal($scope, title, data);
       }
 
 
