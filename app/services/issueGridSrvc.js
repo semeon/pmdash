@@ -8,7 +8,7 @@
 
 
     issueGridService.create = function (title, data) { 
-      var modalScope = $rootScope.$new();
+      var modalScope = $rootScope.$new(true);
       modalScope.title = title;
       modalScope.issues = data;
 

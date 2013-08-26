@@ -9,8 +9,9 @@
 
     chartService.create = function (project, version, data) { 
 
-      var modalScope = $rootScope.$new();
+      var modalScope = $rootScope.$new(true);
       modalScope.title = 'Burndown chart: ' + project.title + ' / ' + version.name;
+      modalScope.due_date = version.due_date;
 
       var chartData = {};
       chartData.labels = [];
@@ -85,6 +86,14 @@
         htmlTemplate +=       '</div>';
 
         htmlTemplate +=       '<div class="modal-body">';
+        htmlTemplate +=         '<div class="row">';
+        htmlTemplate +=           '<div class="col-md-2">';
+        htmlTemplate +=             'Version Due date: {{due_date}}';
+        htmlTemplate +=           '</div>';
+        htmlTemplate +=         '</div>';
+
+
+
         htmlTemplate +=         '<div class="row" style="min-height: 400px;">';
         htmlTemplate +=           '<div class="col-md-12">';
         htmlTemplate +=             '<chartjs ng-model="data"></chartjs>';
