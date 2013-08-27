@@ -27,6 +27,8 @@
         this.data.datasets[1].pointColor =       "rgba(60,100,255,1)";
         this.data.datasets[1].pointStrokeColor = "#f0f0f0";
 
+
+        // Push data
         for (var i=1; i<duration; i++) {
             var date = '08.';
             if (i<10) {
@@ -42,14 +44,16 @@
             }
         }
 
+        // Update y Axis step according to data
         yaxisStep = Math.round(yaxisMax/10);
 
-        // Ideal line
+        // Push ideal line
         var idealStep = yaxisMax/ (duration-3);
         for (var j=0; j<duration; j++) {
             this.data.datasets[0].data.push(yaxisMax - idealStep*j);
         }
 
+        // create settings
         this.settings = {
             scaleOverride: true,
             scaleSteps: yaxisMax*1.1/yaxisStep,
