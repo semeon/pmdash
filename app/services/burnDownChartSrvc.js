@@ -6,7 +6,6 @@
 
     var chartService = {};
 
-    var modalScope = {};
 
 
     function resetChartData() {
@@ -25,52 +24,50 @@
         chartData.datasets[1].fillColor =        "rgba(60,100,255,0.3)";
         chartData.datasets[1].strokeColor =      "rgba(60,100,255,1)";
         chartData.datasets[1].pointColor =       "rgba(60,100,255,1)";
-        chartData.datasets[1].pointStrokeColor = "#eef";
+        chartData.datasets[1].pointStrokeColor = "#f0f0f0";
 
         return chartData;
     }
 
 
-    chartService.create = function (project, version, data, scope) { 
+    chartService.create = function (project, version, data) { 
 
         var chartData = resetChartData();
-
-        modalScope = {};
-        modalScope = $rootScope.$new(true);
-        modalScope.title = 'Burndown chart: ' + project.title + ' / ' + version.name;
-        modalScope.due_date = version.due_date;
-
         var yaxisMax = 0;
         var duration = 20;
 
         for (var i=1; i<duration; i++) {
-        var date = '08.';
-        if (i<10) {
-          date += '0';
-        }
-        date += i;
-        chartData.labels.push(date);
+            var date = '08.';
+            if (i<10) {
+              date += '0';
+            }
+            date += i;
+            chartData.labels.push(date);
 
-        if (data.records[date]) {
-            var value = data.records[date].value;
-            chartData.datasets[1].data.push(value);
-            if(value > yaxisMax) yaxisMax = value;
-        }
+            if (data.records[date]) {
+                var value = data.records[date].value;
+                chartData.datasets[1].data.push(value);
+                if(value > yaxisMax) yaxisMax = value;
+            }
         }
 
         var yaxisStep = Math.round(yaxisMax/10);
 
         // Ideal line
-        var idealStep = yaxisMax/ (duration-3) ;
-        console.log('idealStep: ' + idealStep);
+        var idealStep = yaxisMax/ (duration-3);
 
         var nextValue = yaxisMax;
 
         for (var j=1; j<duration; j++) {
-        chartData.datasets[0].data.push(nextValue);
-        nextValue = nextValue - idealStep;
+            chartData.datasets[0].data.push(nextValue);
+            nextValue = nextValue - idealStep;
         }
 
+
+
+        var modalScope = $rootScope.$new(true);
+        modalScope.title = 'Burndown chart: ' + project.title + ' / ' + version.name;
+        modalScope.due_date = version.due_date;
         modalScope.data = chartData;
         modalScope.chartSettings =  {
             scaleOverride : true,
@@ -83,11 +80,6 @@
 
         var modalTitle = 'Burndown chart: ' + project.title + ' / ' + version.name;
         var modalBody = '';
-        modalBody += '<div class="row">';
-        modalBody +=    '<div class="col-md-2">';
-        modalBody +=        'Version Due date: {{due_date}}';
-        modalBody +=    '</div>';
-        modalBody += '</div>';
         modalBody += '<div class="row" style="min-height: 400px;">';
         modalBody +=    '<div class="col-md-12">';
         modalBody +=        '<chartjs></chartjs>';
