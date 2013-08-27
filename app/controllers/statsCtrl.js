@@ -1,4 +1,4 @@
-function StatsCtrl($scope, $rootScope, ProjectDataLoader, IssueGrid, DB, BurnDownChart) {
+function StatsCtrl($scope, $rootScope, ProjectDataLoader, IssueGrid, DB) {
     var log_ctrl = ' - StatsCtrl: ';
     console.log('');
     console.log('StatsCtrl Controller started');
