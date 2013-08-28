@@ -73,7 +73,43 @@ appModule.factory('DBUtil', ['$http', '$rootScope', function($http, $rootScope) 
 			historySnapshot.records['2013-08-15'].value = 31;
 
 			historySnapshot.records['2013-08-16'] = {};
-			historySnapshot.records['2013-08-16'].value = 33;
+			historySnapshot.records['2013-08-16'].value = 30;
+
+			historySnapshot.records['2013-08-17'] = {};
+			historySnapshot.records['2013-08-17'].value = 28;
+
+			historySnapshot.records['2013-08-18'] = {};
+			historySnapshot.records['2013-08-18'].value = 25;
+
+			historySnapshot.records['2013-08-19'] = {};
+			historySnapshot.records['2013-08-19'].value = 22;
+
+			historySnapshot.records['2013-08-20'] = {};
+			historySnapshot.records['2013-08-20'].value = 20;
+
+			historySnapshot.records['2013-08-21'] = {};
+			historySnapshot.records['2013-08-21'].value = 18;
+
+			historySnapshot.records['2013-08-22'] = {};
+			historySnapshot.records['2013-08-22'].value = 15;
+
+			historySnapshot.records['2013-08-23'] = {};
+			historySnapshot.records['2013-08-23'].value = 14;
+
+			historySnapshot.records['2013-08-24'] = {};
+			historySnapshot.records['2013-08-24'].value = 13;
+
+			historySnapshot.records['2013-08-25'] = {};
+			historySnapshot.records['2013-08-25'].value = 12;
+
+			historySnapshot.records['2013-08-26'] = {};
+			historySnapshot.records['2013-08-26'].value = 11;
+
+			historySnapshot.records['2013-08-27'] = {};
+			historySnapshot.records['2013-08-27'].value = 10;
+
+
+
 
 			function success(data){
 				console.log(log_ctrl + 'Document ' + historySnapshot._id + ' successfully saved to DB.');

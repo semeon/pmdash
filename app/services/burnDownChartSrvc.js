@@ -35,6 +35,8 @@
         console.log('DATA');
         console.log(data.records);
 
+        var chartStarted = false;
+
         for ( var dateMoment = startMoment; 
               dateMoment <= endMoment; 
               dateMoment.add('days', 1)
@@ -43,25 +45,21 @@
             var date = dateMoment.format('YYYY-MM-DD');
             var today = moment();
 
-            this.data.labels.push(dateMoment.format('MM.DD'));
-
-
-            //  moment().isAfter(Moment|String|Number|Date|Array);
-
             if (!dateMoment.isAfter(today)) {
-
                 if (data.records[date]) {
+                    chartStarted = true;
+
                     var value = data.records[date].value;
                     console.log('Value for ' + date + ' was found: ' + value);
                     this.data.datasets[1].data.push(value);
                     if(value > yaxisMax) yaxisMax = value;
+
                 } else {
-                    this.data.datasets[1].data.push(undefined);
+                    if (chartStarted) this.data.datasets[1].data.push(undefined);
                     console.log('Value for ' + date + ' was not found.');
                 }
-
             }
-
+            if (chartStarted) this.data.labels.push(dateMoment.format('MM.DD'));
 
         }
         console.log('CHART DATA');
@@ -71,9 +69,11 @@
         // Update y Axis step according to data
         yaxisStep = Math.round(yaxisMax/10);
 
+        var xaxisWidth = this.data.labels.length;
+
         // Push ideal line
-        var idealStep = yaxisMax/ (duration-3);
-        for (var j=0; j<duration; j++) {
+        var idealStep = yaxisMax/ (xaxisWidth-1);
+        for (var j=0; j<xaxisWidth; j++) {
             this.data.datasets[0].data.push(yaxisMax - idealStep*j);
         }
 

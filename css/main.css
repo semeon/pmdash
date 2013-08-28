@@ -48,5 +48,5 @@ body {
 
 .burndownModal {
     /* new custom width */
-    min-width: 90%;
+    min-width: 1080px;
 }

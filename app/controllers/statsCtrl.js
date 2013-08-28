@@ -6,6 +6,9 @@ function StatsCtrl($scope, $rootScope, ProjectDataLoader, IssueGrid, DB) {
   	var appData = $rootScope.data;
     var userSettings = $rootScope.settings.userSettings;
     var redmineSettings = $rootScope.settings.redmineSettings;
+    var appSettings = $rootScope.settings.appSettings;
+
+    $scope.burndownsOn = appSettings.statistics;
 
     $scope.projects = appData.projects;
 

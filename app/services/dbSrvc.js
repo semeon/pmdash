@@ -10,6 +10,12 @@ appModule.factory('DB', ['$http', '$rootScope', 'BurnDownChart', function($http,
 	// READ DATA
 	// ---------------------------------------------------------------------
 		dbService.getVersionHistory = function(project, version) {
+
+			if (!appSettings.statistics) {
+				console.log('Statistics is turned off.');
+				return;
+			}
+
 			var docId = project.id + '_' + version.id;
 
 			function successCallback(data) {
@@ -92,6 +98,13 @@ appModule.factory('DB', ['$http', '$rootScope', 'BurnDownChart', function($http,
 
 
 		dbService.updateVersionHistory = function(project, version) {
+
+			if (!appSettings.statistics) {
+				console.log('Statistics is turned off.');
+				return;
+			}
+
+			
 			var historySnapshot = {};
 			historySnapshot.docId = project.id + '_' + version.id;
 			historySnapshot.projectId = project.id;

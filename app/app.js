@@ -16,7 +16,7 @@ appModule.directive('chartjs', function() {
             var chartData = scope.data;
             var chartSettings = scope.chartSettings;
 
-            var canv = $('<canvas id="myChart" width="1000" height="400"></canvas>');
+            var canv = $('<canvas id="myChart" width="1000" height="500"></canvas>');
             $(elem).append(canv);
             var ctx = canv.get(0).getContext("2d");
             var myNewChart = new Chart(ctx);
