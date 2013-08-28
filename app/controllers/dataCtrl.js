@@ -11,6 +11,8 @@ function DataCtrl() {
 			console.log('Gathering statistics for ' + project.id + ' / ' + version.name);
 			var issues = version.sourceIssues;
 
+			version.startDate = '';
+
 			// version.reset();
 
 			for (var i=0; i<issues.length; i++) {
@@ -36,6 +38,11 @@ function DataCtrl() {
 						console.log('--- Pushing to all issues list and hash map');
 						version.issues.push(issue);
 						version.issuesMap[String(issue.id)] = issue;
+
+						if (version.startDate == '')  version.startDate = issue.start_date;
+						if (issue.start_date!='' && issue.start_date < version.startDate) {
+							version.startDate = issue.start_date;
+						}
 
 
 					// Collecting trackers
