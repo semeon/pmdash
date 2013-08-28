@@ -6,9 +6,11 @@
 
     var chartService = {};
 
-    function Chart(data) {
-        var yaxisMax = 0;
-        var duration = 20;
+    function Chart(data, startDate, endDate) {
+
+        var startMoment = moment(startDate);
+        var endMoment = moment(endDate);
+        var duration = moment.duration(endMoment - startMoment).asDays();
 
         this.data = {};
         this.data.labels = [];
@@ -28,21 +30,30 @@
         this.data.datasets[1].pointStrokeColor = "#f0f0f0";
 
 
-        // Push data
-        for (var i=1; i<duration; i++) {
-            var date = '08.';
-            if (i<10) {
-              date += '0';
-            }
-            date += i;
-            this.data.labels.push(date);
+        var yaxisMax = 0;
+
+        console.log('DATA');
+        console.log(data.records);
+
+        for ( var dateMoment = startMoment; 
+              dateMoment <= endMoment; 
+              dateMoment.add('days', 1)
+            ) {
+            var date = dateMoment.format('YYYY-MM-DD');
+            this.data.labels.push(dateMoment.format('MM.DD'));
 
             if (data.records[date]) {
                 var value = data.records[date].value;
+                // console.log('Value for ' + date + ' was found: ' + value);
+
                 this.data.datasets[1].data.push(value);
                 if(value > yaxisMax) yaxisMax = value;
+            } else {
+                this.data.datasets[1].data.push(undefined);
+                // console.log('Value for ' + date + ' was not found.');
             }
         }
+
 
         // Update y Axis step according to data
         yaxisStep = Math.round(yaxisMax/10);
@@ -68,7 +79,11 @@
 
     chartService.create = function (project, version, data) { 
 
-        var chart = new Chart(data);
+        console.log('version.startDate: ' + version.startDate);
+        console.log(' version.due_date: ' + version.due_date);
+
+
+        var chart = new Chart(data, version.startDate, version.due_date);
 
         var modalScope = $rootScope.$new(true);
         modalScope.title = 'Burndown chart: ' + project.title + ' / ' + version.name;
@@ -84,8 +99,6 @@
         modalBody +=        '<chartjs></chartjs>';
         modalBody +=    '</div>';
         modalBody += '</div>';
-
-        console.log('modalScope.title: ' + modalScope.title);
 
         Modals.genericModal(modalScope, modalTitle, modalBody);
     }

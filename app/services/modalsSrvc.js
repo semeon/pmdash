@@ -24,9 +24,9 @@
       modalTemplate +=   '</div>';
       modalTemplate += '</div>';
 
-      console.log('MODALS Servise: modalScope: ');
-      console.log(modalScope);
-      console.log(modalScope.due_date);
+      // console.log('MODALS Servise: modalScope: ');
+      // console.log(modalScope);
+      // console.log(modalScope.due_date);
 
       var modalDom = $compile(modalTemplate)(modalScope);
       $(modalDom).modal();
