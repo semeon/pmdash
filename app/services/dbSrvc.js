@@ -2,7 +2,7 @@ appModule.factory('DB', ['$http', '$rootScope', 'BurnDownChart', function($http,
 
     var log_ctrl = ' - DbSrvs: ';
     var appSettings = $rootScope.settings.appSettings;
-    var timeStampFormat = 'YYYY-MM-DD_hh:mm';
+    var timeStampFormat = 'YYYY-MM-DD';
     var dbService = {};
 
 
@@ -39,7 +39,8 @@ appModule.factory('DB', ['$http', '$rootScope', 'BurnDownChart', function($http,
 				historyDoc.records = historySnapshot.records;
 			} else {
 				// NORMAL FLOW
-				historyDoc.records[date] = historySnapshot.currentIssuesNum;
+				historyDoc.records[date] = {};
+				historyDoc.records[date].value = historySnapshot.currentIssuesNum;
 			}
 
 			function success(data){
@@ -106,83 +107,6 @@ appModule.factory('DB', ['$http', '$rootScope', 'BurnDownChart', function($http,
 			requestVersionHistory(historySnapshot, docFound, docNotFound);
 		}
 
-
-	// ---------------------------------------------------------------------
-	// WRITE DUMMY DATA
-	// ---------------------------------------------------------------------
-		dbService.writeDummyData = function(project, version) {
-
-			console.log(log_ctrl + 'Writing dummy data..');
-			var historySnapshot = {};
-			historySnapshot.docId = project.id + '_' + version.id;
-			historySnapshot.projectId = project.id;
-			historySnapshot.versionId = version.id;
-			historySnapshot.versionName = version.name;
-			historySnapshot.records = {};
-
-			var number = 22;
-
-			for (var i=1; i<15; i++) {
-
-				var date = '08.';
-
-				var random = Math.round( Math.random()*4 ) - 2;
-				number = number - 1 + random;
-
-				console.log(log_ctrl + '   i: ' + i);
-				console.log(log_ctrl + 'date: ' + date);
-				console.log(log_ctrl + 'rand: ' + random);
-				console.log(log_ctrl + 'numb: ' + number);
-				console.log('');
-
-				if (i<10) {
-					date += '0';
-				}
-				date += i;
-				historySnapshot.records[date] = {};
-				historySnapshot.records[date].value = number;
-			}
-			requestVersionHistory(historySnapshot, docFound, docNotFound);
-		}
-
-
-		dbService.writeDummyData2 = function(project, version) {
-
-			console.log(log_ctrl + 'Writing dummy data..');
-			var historySnapshot = {};
-			historySnapshot.docId = project.id + '_' + version.id;
-			historySnapshot.projectId = project.id;
-			historySnapshot.versionId = version.id;
-			historySnapshot.versionName = version.name;
-			historySnapshot.records = {};
-
-			var number = 35;
-
-			for (var i=1; i<20; i++) {
-
-				var date = '2013-08-';
-
-				var random = Math.round( Math.random()*4 ) - 2;
-				number = number - 1 + random;
-
-				console.log(log_ctrl + '   i: ' + i);
-				console.log(log_ctrl + 'date: ' + date);
-				console.log(log_ctrl + 'rand: ' + random);
-				console.log(log_ctrl + 'numb: ' + number);
-				console.log('');
-
-				if (i<10) {
-					date += '0';
-				}
-				date += i;
-				
-				historySnapshot.records[date] = {};
-				historySnapshot.records[date].date = date;
-				historySnapshot.records[date].value = number;
-
-			}
-			requestVersionHistory(historySnapshot, docFound, docNotFound);
-		}
 
 
 	// Genric request

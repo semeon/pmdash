@@ -1,4 +1,4 @@
-appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $rootScope){
+appModule.factory('ProjectDataLoader', ['$http', '$rootScope', 'DB', function($http, $rootScope, DB){
 
   var log_ctrl = ' - ProjectDataLoader: ';
   console.log('');
@@ -170,9 +170,12 @@ appModule.factory('ProjectDataLoader', ['$http', '$rootScope', function($http, $
           requestIssuesPage(project, version, requestUrl, nexPageNum);
 
         } else {
+          // VERSION IS FINALLY LOADED
           // eventHandler.versionBatchLoadCompleted(project, version);
           version.loadInProgress = false;
           $rootScope.data.calculateStatistics(project, version);
+          DB.updateVersionHistory(project, version);
+
         }
 
       } else if (data.error) { 

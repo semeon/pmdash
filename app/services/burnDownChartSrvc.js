@@ -39,20 +39,33 @@
               dateMoment <= endMoment; 
               dateMoment.add('days', 1)
             ) {
+
             var date = dateMoment.format('YYYY-MM-DD');
+            var today = moment();
+
             this.data.labels.push(dateMoment.format('MM.DD'));
 
-            if (data.records[date]) {
-                var value = data.records[date].value;
-                // console.log('Value for ' + date + ' was found: ' + value);
 
-                this.data.datasets[1].data.push(value);
-                if(value > yaxisMax) yaxisMax = value;
-            } else {
-                this.data.datasets[1].data.push(undefined);
-                // console.log('Value for ' + date + ' was not found.');
+            //  moment().isAfter(Moment|String|Number|Date|Array);
+
+            if (!dateMoment.isAfter(today)) {
+
+                if (data.records[date]) {
+                    var value = data.records[date].value;
+                    console.log('Value for ' + date + ' was found: ' + value);
+                    this.data.datasets[1].data.push(value);
+                    if(value > yaxisMax) yaxisMax = value;
+                } else {
+                    this.data.datasets[1].data.push(undefined);
+                    console.log('Value for ' + date + ' was not found.');
+                }
+
             }
+
+
         }
+        console.log('CHART DATA');
+        console.log(this.data.datasets[1].data);
 
 
         // Update y Axis step according to data
