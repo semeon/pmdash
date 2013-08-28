@@ -45,7 +45,7 @@
                       ><span class="glyphicon glyphicon-refresh"></span></button>
 
               <button type="button" class="btn btn-primary btn-xs"
-                      ng-class="{disabled:version.loadInProgress}"
+                      ng-class="{disabled:version.loadInProgress||version.due_date==undefined}"
                       ng-click="getBurndownClick(project, version)"
                       ><span class="glyphicon glyphicon-fire"></span></button>
 
