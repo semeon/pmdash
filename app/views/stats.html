@@ -44,6 +44,12 @@
                       ng-class="{disabled:version.loadInProgress}"
                       ><span class="glyphicon glyphicon-refresh"></span> Refresh data</button>
 
+              <button type="button" class="btn btn-primary btn-xs" 
+                      ng-class="{disabled:version.hidden||version.loadInProgress}"
+                      ng-click="versionExpandClick(version)"
+                      data-toggle="button"
+                      ><span class="glyphicon glyphicon-list"></span> Show trackers</button>
+
               <button type="button" class="btn btn-warning btn-xs"
                       ng-class="{disabled:version.loadInProgress||version.due_date==undefined||!burndownsOn}"
                       ng-click="getBurndownClick(project, version)"
